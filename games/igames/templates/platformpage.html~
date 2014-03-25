@@ -4,6 +4,29 @@
 		</head>
 	<body>
 		<h1>Platform: {{ platform.name }}</h1>
-		
+		<p>Games: </p>
+			{% if games %}
+			<ul>
+			{% for game in games.all %}
+			<li>
+			{{game.name}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist games.</p>
+			{% endif %}
+		<p>With games developed by these companies: </p>
+			{% if companies %}
+			<ul>
+			{% for company in companies %}
+			<li>
+			{{company.name}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist companies.</p>
+			{% endif %}
 	</body>
 </html>

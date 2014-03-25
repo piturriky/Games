@@ -6,6 +6,8 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from igames.models import *
 
+from sets import Set
+
 def mainpage(request):
 	template = get_template('mainpage.html')
 	variables = Context({
@@ -19,13 +21,25 @@ def mainpage(request):
 def userpage(request, username):
 	try:
 		user = User.objects.get(username=username)
+		
 	except:
 		raise Http404('User not found.')
-	games = user.game_set.all()
+	games = Game.objects.filter(developers=user)
+
+	platforms = Set([])
+	companies = Set([])
+	for game in games:
+		companies.add(game.company)
+		for platform in game.platforms.all():
+			platforms.add(platform)
+	
 	template = get_template('userpage.html')
 	variables = Context({
 		'username': username,
-		'games': games
+		'games': games,
+		'platforms': platforms,
+		'companies': companies,
+		
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -36,6 +50,7 @@ def companiespage(request):
 	variables = Context({
 		'title': 'Companies',
 		'vars': companies,
+		'link': 'company',
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -46,6 +61,7 @@ def gamespage(request):
 	variables = Context({
 		'title': 'Games',
 		'vars': games,
+		'link': 'game',
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -56,6 +72,7 @@ def platformspage(request):
 	variables = Context({
 		'title': 'Platforms',
 		'vars': platforms,
+		'link': 'platform',
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -63,12 +80,20 @@ def platformspage(request):
 def companypage(request, companyname):
 	try:
 		company = Company.objects.get(name=companyname)
+		games = Game.objects.filter(company=company)
 	except:
 		raise Http404('Company not found.')
+
+	platforms = Set([])
+	for game in games:
+		for platform in game.platforms.all():
+			platforms.add(platform)
 
 	template = get_template('companypage.html')
 	variables = Context({
 		'company': company,
+		'games':games,
+		'platforms': platforms,
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -90,12 +115,19 @@ def gamepage(request, gamename):
 def platformpage(request, platformname):
 	try:
 		platform = Platform.objects.get(name=platformname)
+		games = Game.objects.filter(platforms=platform)
 	except:
 		raise Http404('Platform not found.')
+
+	companies = Set([])
+	for game in games:
+		companies.add(game.company)
 
 	template = get_template('platformpage.html')
 	variables = Context({
 		'platform': platform,
+		'games':games,
+		'companies': companies,
 		})
 	output = template.render(variables)
 	return HttpResponse(output)

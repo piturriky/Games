@@ -1,19 +1,46 @@
 <html>
 		<head>
-		<title>{{ username }} Games </title>
+		<title>{{ username }}</title>
 		</head>
 	<body>
-		<h1>Games fets per {{ username }}</h1>
+		<h1> Developer: {{ username }} </h1>
+		<p>Games developed:</p>
 		{% if games %}
 		<ul>
 		{% for game in games %}
 		<li>
-		{{game.name}}
+		<A HREF="http://localhost:8000/game/{{game.name}}">{{game.name}}</A>
 		</li>
 		{% endfor %}
 		</ul>
 		{% else %}
-		<p>No ha fet jocs.</p>
+		<p>Hasn't developed games.</p>
+		{% endif %}
+
+		<p>Works for this/these company/ies:</p>
+		{% if companies %}
+		<ul>
+		{% for company in companies %}
+		<li>
+		<A HREF="http://localhost:8000/company/{{company.name}}">{{company.name}}</A>
+		</li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		<p>Has never worked in a company.</p>
+		{% endif %}
+
+		<p>Platforms in which develops:</p>
+		{% if platforms %}
+		<ul>
+		{% for platform in platforms %}
+		<li>
+		{{platform.name}}
+		</li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		<p>Has never developed in any platform.</p>
 		{% endif %}
 	</body>
 </html>

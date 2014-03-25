@@ -1,8 +1,31 @@
 <html>
 		<head>
-		<title>Company: {{ company.name }}</title>
+		<title>{{ company.name }}</title>
 		</head>
 	<body>
-		<p>Description: {{ company.description }}</p>
+		<h1>Company: {{ company.name }}</h1>
+		<p>Fundation date: {{ company.fundation_date }}</p>
+		<p>Games: </p>
+			{% if games %}
+			<ul>
+			{% for game in games.all %}
+			<li>
+			{{game.name}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist games.</p>
+			{% endif %}
+		<p>Developes in these platforms: </p>
+			{% if platforms %}
+			<ul>
+			{% for platform in platforms %}
+			<li>
+			{{platform.name}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% endif %}
 	</body>
 </html>

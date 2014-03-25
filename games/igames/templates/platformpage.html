@@ -5,16 +5,28 @@
 	<body>
 		<h1>Platform: {{ platform.name }}</h1>
 		<p>Games: </p>
-			{% if platform.games %}
+			{% if games %}
 			<ul>
-			{% for game in platform.games.all %}
+			{% for game in games.all %}
 			<li>
-			{{game.name}}
+			<A HREF="http://localhost:8000/game/{{game.name}}">{{game.name}}</A>
 			</li>
 			{% endfor %}
 			</ul>
 			{% else %}
 			<p>Doesn't exist games.</p>
+			{% endif %}
+		<p>With games developed by these companies: </p>
+			{% if companies %}
+			<ul>
+			{% for company in companies %}
+			<li>
+			<A HREF="http://localhost:8000/company/{{company.name}}">{{company.name}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist companies.</p>
 			{% endif %}
 	</body>
 </html>

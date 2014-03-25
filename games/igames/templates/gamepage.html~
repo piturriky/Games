@@ -7,19 +7,27 @@
 		<p>Release date: {{ game.release_date }}</p>
 		<p>Price: {{ game.price }}</p>
 		<p>Description: {{ game.description }}</p>
-		<p>Company: {{ game.company }}</p>
+		<p>Company: <A HREF="http://localhost:8000/company/{{company.name}}">{{company.name}}</A></p>
 		<p>Developers: </p>
-		{% if game.developers.all %}
-		<ul>
-		{% for developer in game.developers.all %}
-		<li>
-		{{developer.username}}
-		</li>
-		{% endfor %}
-		</ul>
-		{% else %}
-		<p>Doesn't exist developers.</p>
-		{% endif %}
+			{% if game.developers %}
+			<ul>
+			{% for developer in game.developers.all %}
+			<li>
+			<A HREF="http://localhost:8000/user/{{developer.username}}">{{developer.username}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% endif %}
+		<p>Platforms: </p>
+			{% if game.platforms %}
+			<ul>
+			{% for platform in game.platforms.all %}
+			<li>
+			<A HREF="http://localhost:8000/platform/{{platform.name}}">{{platform.name}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% endif %}
 
 	</body>
 </html>

@@ -1,0 +1,19 @@
+<html>
+		<head>
+		<title>{{ username }} Games </title>
+		</head>
+	<body>
+		<h1>Games fets per {{ username }}</h1>
+		{% if games %}
+		<ul>
+		{% for game in games %}
+		<li>
+		{{game.name}}
+		</li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		<p>No ha fet jocs.</p>
+		{% endif %}
+	</body>
+</html>

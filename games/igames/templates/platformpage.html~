@@ -1,0 +1,9 @@
+<html>
+		<head>
+		<title>{{ platform.name }}</title>
+		</head>
+	<body>
+		<h1>Platform: {{ platform.name }}</h1>
+		
+	</body>
+</html>

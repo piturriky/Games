@@ -17,7 +17,14 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
     url(r'^$', mainpage, name='home'),
     url(r'^user/(\w+)/$', userpage),
+    url(r'^companies/', companiespage),
+    url(r'^games/', gamespage),
+    url(r'^platforms/', platformspage),
+    url(r'^company/(\w+)/$', companypage),
+    url(r'^game/(\w+)/$', gamepage),
+    url(r'^platform/(\w+)/$', platformpage),
 
 )

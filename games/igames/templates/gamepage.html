@@ -1,0 +1,37 @@
+<html>
+		<head>
+		<title>{{ game.name }}</title>
+		</head>
+	<body>
+		<h1>Game: {{ game.name }}</h1>
+		<p>Release date: {{ game.release_date }}</p>
+		<p>Price: {{ game.price }}</p>
+		<p>Description: {{ game.description }}</p>
+		<p>Company: {{ game.company }}</p>
+		<p>Developers: </p>
+			{% if game.developers %}
+			<ul>
+			{% for developer in game.developers.all %}
+			<li>
+			{{developer.username}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist developers.</p>
+			{% endif %}
+		<p>Platforms: </p>
+			{% if game.platforms %}
+			<ul>
+			{% for platform in game.platforms.all %}
+			<li>
+			{{platform.name}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist platforms.</p>
+			{% endif %}
+
+	</body>
+</html>

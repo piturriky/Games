@@ -1,0 +1,20 @@
+<html>
+		<head>
+		<title>{{ platform.name }}</title>
+		</head>
+	<body>
+		<h1>Platform: {{ platform.name }}</h1>
+		<p>Games: </p>
+			{% if platform.games %}
+			<ul>
+			{% for game in platform.games.all %}
+			<li>
+			{{game.name}}
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist games.</p>
+			{% endif %}
+	</body>
+</html>

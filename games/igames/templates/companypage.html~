@@ -1,0 +1,8 @@
+<html>
+		<head>
+		<title>Company: {{ company.name }}</title>
+		</head>
+	<body>
+		<p>Description: {{ company.description }}</p>
+	</body>
+</html>

@@ -12,12 +12,13 @@ class Company(models.Model):
 	
 class Platform(models.Model):
 	name = models.TextField(max_length = 100)
+	
 
 	def __unicode__(self):
 		return self.name
 
 class Game(models.Model):
-	name = models.TextField(max_length = 100)
+	name = models.TextField(max_length = 20)
 	release_date = models.DateTimeField()
 	price = models.IntegerField()
 	description = models.TextField(max_length = 100)

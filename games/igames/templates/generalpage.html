@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>{{ title}}</title>
+	</head>
+	<body>
+		<h1>All the {{ title }}:</h1>
+		{% if vars %}
+		<ul>
+		{% for var in vars %}
+		<li>
+		{{var.name}}
+		</li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		<p>Doesn't exist {{ title}}.</p>
+		{% endif %}
+	</body>
+</html>

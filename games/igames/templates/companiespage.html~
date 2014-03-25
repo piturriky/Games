@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>{{ title}}</title>
+	</head>
+	<body>
+		<h1>All the {{ title }}:</h1>
+		{% if companies %}
+		<ul>
+		{% for company in companies %}
+		<li>
+		{{company.name}}
+		</li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		<p>Doesn't exist companies.</p>
+		{% endif %}
+	</body>
+</html>

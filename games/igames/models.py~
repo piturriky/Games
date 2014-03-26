@@ -12,7 +12,6 @@ class Company(models.Model):
 	
 class Platform(models.Model):
 	name = models.TextField(max_length = 100)
-	
 
 	def __unicode__(self):
 		return self.name

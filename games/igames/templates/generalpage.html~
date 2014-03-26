@@ -7,9 +7,15 @@
 		{% if vars %}
 		<ul>
 		{% for var in vars %}
+		{% if var.name %}
 		<li>
-		{{var.name}}
+		<A HREF="http://localhost:8000/{{link}}/{{var.name}}">{{var.name}}</A>
 		</li>
+		{% else %}
+		<li>
+		<A HREF="http://localhost:8000/{{link}}/{{var.name}}">{{var.username}}</A>
+		</li>
+		{% endif %}
 		{% endfor %}
 		</ul>
 		{% else %}

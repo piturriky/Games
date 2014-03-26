@@ -19,12 +19,15 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', mainpage, name='home'),
-    url(r'^user/(\w+)/$', userpage),
-    url(r'^companies/', companiespage),
-    url(r'^games/', gamespage),
-    url(r'^platforms/', platformspage),
-    url(r'^company/(\w+)/$', companypage),
-    url(r'^game/(\w+)/$', gamepage),
-    url(r'^platform/(\w+)/$', platformpage),
+
+    url(r'^developers/$', userspage),
+    url(r'^companies/$', companiespage),
+    url(r'^games/$', gamespage),
+    url(r'^platforms/$', platformspage),
+
+    url(r'^companies/(\w+)/$', companypage),
+    url(r'^games/(\w+)/$', gamepage),
+    url(r'^platforms/(\w+)/$', platformpage),
+    url(r'^developers/(\w+)/$', userpage),
 
 )

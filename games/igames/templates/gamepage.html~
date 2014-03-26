@@ -7,7 +7,7 @@
 		<p>Release date: {{ game.release_date }}</p>
 		<p>Price: {{ game.price }}</p>
 		<p>Description: {{ game.description }}</p>
-		<p>Company: <A HREF="http://localhost:8000/company/{{company.name}}">{{company.name}}</A></p>
+		<p>Company: <A HREF="http://localhost:8000/company/{{game.company}}">{{game.company}}</A></p>
 		<p>Developers: </p>
 			{% if game.developers %}
 			<ul>

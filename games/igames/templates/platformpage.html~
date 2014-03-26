@@ -9,19 +9,31 @@
 			<ul>
 			{% for game in games.all %}
 			<li>
-			{{game.name}}
+			<A HREF="http://localhost:8000/game/{{game.name}}">{{game.name}}</A>
 			</li>
 			{% endfor %}
 			</ul>
 			{% else %}
 			<p>Doesn't exist games.</p>
 			{% endif %}
-		<p>With games developed by these companies: </p>
+		<p>Developers: </p>
+			{% if developers %}
+			<ul>
+			{% for developer in developers %}
+			<li>
+			<A HREF="http://localhost:8000/user/{{developer.username}}">{{developer.username}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist developers.</p>
+			{% endif %}
+		<p>Companies that work with it: </p>
 			{% if companies %}
 			<ul>
 			{% for company in companies %}
 			<li>
-			{{company.name}}
+			<A HREF="http://localhost:8000/company/{{company.name}}">{{company.name}}</A>
 			</li>
 			{% endfor %}
 			</ul>

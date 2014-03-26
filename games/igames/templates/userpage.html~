@@ -35,7 +35,7 @@
 		<ul>
 		{% for platform in platforms %}
 		<li>
-		{{platform.name}}
+		<A HREF="http://localhost:8000/platform/{{platform.name}}">{{platform.name}}</A>
 		</li>
 		{% endfor %}
 		</ul>

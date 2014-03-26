@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Company(models.Model):
-	name = models.TextField(max_length = 100)
+	name = models.TextField(max_length = 20)
 	fundation_date = models.DateTimeField()
 
 	def __unicode__(self):
 		return self.name
 	
 class Platform(models.Model):
-	name = models.TextField(max_length = 100)
+	name = models.TextField(max_length = 20)
 
 	def __unicode__(self):
 		return self.name

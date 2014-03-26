@@ -6,6 +6,10 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from igames.models import *
 
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from sets import Set
 
 def mainpage(request):
@@ -13,7 +17,8 @@ def mainpage(request):
 	variables = Context({
 		'titlehead': 'Games aPP',
 		'pagetitle': 'Welcome to the Games aPPlication',
-		'contentbody': 'Managing the development of games since 2014'
+		'contentbody': 'Managing the development of games since 2014',
+		'user': request.user,
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -151,4 +156,14 @@ def platformpage(request, platformname):
 	output = template.render(variables)
 	return HttpResponse(output)
 
-
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect("/login")
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/register.html", {
+        'form': form,
+    })

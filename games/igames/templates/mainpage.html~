@@ -17,8 +17,7 @@
 	per gestionar sobres.</p>
 	{% endif %}
 
-	{% if user.username %}
+
 	<p> <A HREF="/logout">LogOut</A></p> 
-	{% endif %}
 	</body>
 </html>

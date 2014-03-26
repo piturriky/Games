@@ -9,7 +9,7 @@
 			<ul>
 			{% for game in games.all %}
 			<li>
-			<A HREF="http://localhost:8000/games/{{game.name}}">{{game.name}}</A>
+			<A HREF="/games/{{game.name}}">{{game.name}}</A>
 			</li>
 			{% endfor %}
 			</ul>
@@ -21,7 +21,7 @@
 			<ul>
 			{% for developer in developers %}
 			<li>
-			<A HREF="http://localhost:8000/users/{{developer.username}}">{{developer.username}}</A>
+			<A HREF="/users/{{developer.username}}">{{developer.username}}</A>
 			</li>
 			{% endfor %}
 			</ul>
@@ -33,7 +33,7 @@
 			<ul>
 			{% for company in companies %}
 			<li>
-			<A HREF="http://localhost:8000/companies/{{company.name}}">{{company.name}}</A>
+			<A HREF="/companies/{{company.name}}">{{company.name}}</A>
 			</li>
 			{% endfor %}
 			</ul>

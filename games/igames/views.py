@@ -6,6 +6,7 @@ from django.template.loader import get_template
 from django.contrib.auth.models import User
 from igames.models import *
 
+from django.core import serializers
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
@@ -22,6 +23,14 @@ def mainpage(request):
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
+
+def userpagejson(request,username):
+	data = serializers.serialize("json",User.objects.filter(username=username))
+	return HttpResponse(data, mimetype="application/json")
+
+def userpagexml(request,username):
+	data = serializers.serialize("xml",User.objects.filter(username=username))
+	return HttpResponse(data, mimetype="application/xml")
 
 def userpage(request, username):
 	try:
@@ -49,6 +58,14 @@ def userpage(request, username):
 	output = template.render(variables)
 	return HttpResponse(output)
 
+def companiespagejson(request):
+	data = serializers.serialize("json",Company.objects.all())
+	return HttpResponse(data, mimetype="application/json")
+
+def companiespagexml(request):
+	data = serializers.serialize("xml",Company.objects.all())
+	return HttpResponse(data, mimetype="application/xml")
+
 def companiespage(request):
 	template = get_template('generalpage.html')
 	companies = Company.objects.all()
@@ -59,6 +76,14 @@ def companiespage(request):
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
+
+def gamespagejson(request):
+	data = serializers.serialize("json",Game.objects.all())
+	return HttpResponse(data, mimetype="application/json")
+
+def gamespagexml(request):
+	data = serializers.serialize("xml",Game.objects.all())
+	return HttpResponse(data, mimetype="application/xml")
 
 def gamespage(request):
 	template = get_template('generalpage.html')
@@ -71,6 +96,14 @@ def gamespage(request):
 	output = template.render(variables)
 	return HttpResponse(output)
 
+def platformspagejson(request):
+	data = serializers.serialize("json",Platform.objects.all())
+	return HttpResponse(data, mimetype="application/json")
+
+def platformspagexml(request):
+	data = serializers.serialize("xml",Platform.objects.all())
+	return HttpResponse(data, mimetype="application/xml")
+
 def platformspage(request):
 	template = get_template('generalpage.html')
 	platforms = Platform.objects.all()
@@ -82,7 +115,16 @@ def platformspage(request):
 	output = template.render(variables)
 	return HttpResponse(output)
 
+def userspagejson(request):
+	data = serializers.serialize("json",User.objects.all())
+	return HttpResponse(data, mimetype="application/json")
+
+def userspagexml(request):
+	data = serializers.serialize("xml",User.objects.all())
+	return HttpResponse(data, mimetype="application/xml")
+
 def userspage(request):
+	
 	template = get_template('generalpage.html')
 	developers = User.objects.all()
 	variables = Context({
@@ -92,6 +134,15 @@ def userspage(request):
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
+
+
+def companypagejson(request,companyname):
+	data = serializers.serialize("json",Company.objects.filter(name=companyname))
+	return HttpResponse(data, mimetype="application/json")
+
+def companypagexml(request,companyname):
+	data = serializers.serialize("xml",Company.objects.filter(name=companyname))
+	return HttpResponse(data, mimetype="application/xml")
 
 def companypage(request, companyname):
 	try:
@@ -118,6 +169,14 @@ def companypage(request, companyname):
 	output = template.render(variables)
 	return HttpResponse(output)
 
+def gamepagejson(request,gamename):
+	data = serializers.serialize("json",Game.objects.filter(name=gamename))
+	return HttpResponse(data, mimetype="application/json")
+
+def gamepagexml(request,gamename):
+	data = serializers.serialize("xml",Game.objects.filter(name=gamename))
+	return HttpResponse(data, mimetype="application/xml")
+
 def gamepage(request, gamename):
 	try:
 		game = Game.objects.get(name=gamename)
@@ -131,6 +190,14 @@ def gamepage(request, gamename):
 		})
 	output = template.render(variables)
 	return HttpResponse(output)
+
+def platformpagejson(request,platformname):
+	data = serializers.serialize("json",Platform.objects.filter(name=platformname))
+	return HttpResponse(data, mimetype="application/json")
+
+def platformpagexml(request,platformname):
+	data = serializers.serialize("xml",Platform.objects.filter(name=platformname))
+	return HttpResponse(data, mimetype="application/xml")
 
 def platformpage(request, platformname):
 	try:

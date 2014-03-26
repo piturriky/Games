@@ -15,10 +15,13 @@
 		{{ form.password }}</p>
 
 		<input type="hidden" name="next" value="/" />
-		<input type="submit" value="login" />
+		<input type="submit" value="Log in" />
 		{% csrf_token %}
 		</form>
-
-		<p> <A HREF="/register">Register</A></p>
+		<form>
+		If you aren't registered, do it here:
+		<input Type="BUTTON" VALUE="Register" ONCLICK="window.location.href='/register'">
+		</form>
+		
 	</body>
 </html>

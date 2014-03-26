@@ -9,11 +9,11 @@
 		{% for var in vars %}
 		{% if var.name %}
 		<li>
-		<A HREF="http://localhost:8000/{{link}}/{{var.name}}">{{var.name}}</A>
+		<A HREF="/{{link}}/{{var.name}}">{{var.name}}</A>
 		</li>
 		{% else %}
 		<li>
-		<A HREF="http://localhost:8000/{{link}}/{{var.username}}">{{var.username}}</A>
+		<A HREF="/{{link}}/{{var.username}}">{{var.username}}</A>
 		</li>
 		{% endif %}
 		{% endfor %}

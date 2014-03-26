@@ -8,17 +8,27 @@
 
 	{% if user.username %}
 	<p>Welcome {{ user.username }}!
-	Aquí podrà gestionar els seus sobres!</p>
+	Here you will be able to manage your application.</p>
 
+	<form>
+	<input Type="BUTTON" VALUE="Profile" ONCLICK="window.location.href='/developers/{{user.username}}'">
+	</form>
 
+	<form>
+	<input Type="BUTTON" VALUE="Developers" ONCLICK="window.location.href='/developers'">
+	<input Type="BUTTON" VALUE="Games" ONCLICK="window.location.href='/games'">
+	<input Type="BUTTON" VALUE="Companies" ONCLICK="window.location.href='/companies'">
+	<input Type="BUTTON" VALUE="Platforms" ONCLICK="window.location.href='/platforms'">
+	</form>
+
+	<form>
+	<input Type="BUTTON" VALUE="Log Out" ONCLICK="window.location.href='/logout'">
+	</form>
 	{% else %}
-	<p>Benvingut anònim:
-	Obligatori fer <a href="/login/">Sign in</a>
-	per gestionar sobres.</p>
+	<p>Welcome anonymus,
+	you must <a href="/login/">Sign in</a>
+	in order to manage the application.</p>
 	{% endif %}
 
-	{% if user.username %}
-	<p> <A HREF="/logout">LogOut</A></p> 
-	{% endif %}
 	</body>
 </html>

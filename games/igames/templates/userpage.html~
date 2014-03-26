@@ -1,15 +1,13 @@
-<html>
-		<head>
-		<title>{{ username }}</title>
-		</head>
-	<body>
+{% extends "mainpage.html" %}
+
+{% block content %}
 		<h1> Developer: {{ username }} </h1>
 		<p>Games developed:</p>
 		{% if games %}
 		<ul>
 		{% for game in games %}
 		<li>
-		<A HREF="http://localhost:8000/game/{{game.name}}">{{game.name}}</A>
+		<A HREF="/games/{{game.name}}">{{game.name}}</A>
 		</li>
 		{% endfor %}
 		</ul>
@@ -22,7 +20,7 @@
 		<ul>
 		{% for company in companies %}
 		<li>
-		<A HREF="http://localhost:8000/company/{{company.name}}">{{company.name}}</A>
+		<A HREF="/companies/{{company.name}}">{{company.name}}</A>
 		</li>
 		{% endfor %}
 		</ul>
@@ -35,12 +33,11 @@
 		<ul>
 		{% for platform in platforms %}
 		<li>
-		<A HREF="http://localhost:8000/platform/{{platform.name}}">{{platform.name}}</A>
+		<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
 		</li>
 		{% endfor %}
 		</ul>
 		{% else %}
 		<p>Has never developed in any platform.</p>
 		{% endif %}
-	</body>
-</html>
+{% endblock %}

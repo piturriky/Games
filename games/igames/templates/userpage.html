@@ -1,46 +1,76 @@
 <html>
-		<head>
+	<head>
 		<title>{{ username }}</title>
-		</head>
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:350px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
+	</head>
 	<body>
-		<h1> Developer: {{ username }} </h1>
-		<p>Games developed:</p>
-		{% if games %}
-		<ul>
-		{% for game in games %}
-		<li>
-		<A HREF="/games/{{game.name}}">{{game.name}}</A>
-		</li>
-		{% endfor %}
-		</ul>
-		{% else %}
-		<p>Hasn't developed games.</p>
-		{% endif %}
+		<h1> Developer: {{ user.username }} </h1>
 
-		<p>Works for this/these company/ies:</p>
-		{% if companies %}
-		<ul>
-		{% for company in companies %}
-		<li>
-		<A HREF="/companies/{{company.name}}">{{company.name}}</A>
-		</li>
-		{% endfor %}
-		</ul>
-		{% else %}
-		<p>Has never worked in a company.</p>
-		{% endif %}
+		<div id="Content">
+			<p>Name: {{ user.first_name }}</p>
+			<p>Last name: {{ user.last_name }}</p>
+			<p>Email: {{ user.email }}</p>
+			<br>
+			<p>Games developed:</p>
+			{% if games %}
+			<ul>
+			{% for game in games %}
+			<li>
+			<A HREF="/games/{{game.name}}">{{game.name}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<ul>Hasn't developed games.</ul>
+			{% endif %}
 
-		<p>Platforms in which develops:</p>
-		{% if platforms %}
-		<ul>
-		{% for platform in platforms %}
-		<li>
-		<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
-		</li>
-		{% endfor %}
-		</ul>
-		{% else %}
-		<p>Has never developed in any platform.</p>
-		{% endif %}
+			<p>Works for this/these company/ies:</p>
+			{% if companies %}
+			<ul>
+			{% for company in companies %}
+			<li>
+			<A HREF="/companies/{{company.name}}">{{company.name}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<ul>Has never worked in a company.</ul>
+			{% endif %}
+
+			<p>Platforms in which develops:</p>
+			{% if platforms %}
+			<ul>
+			{% for platform in platforms %}
+			<li>
+			<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
+			</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			<ul>Has never developed in any platform.</ul>
+			{% endif %}
+		</div>
+
+		<br><br>
+		<form>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
+		</form>
+
+		
 	</body>
 </html>

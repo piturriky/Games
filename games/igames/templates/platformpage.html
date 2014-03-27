@@ -1,44 +1,67 @@
 <html>
 		<head>
-		<title>{{ platform.name }}</title>
+			<title>{{ platform.name }}</title>
+			<style type="text/css">
+				body {
+					margin:50px 0px; padding:0px;
+					text-align:center;
+					}
+	
+				#Content {
+					width:350px;
+					margin:0px auto;
+					text-align:left;
+					padding:15px;
+					border:1px dashed #333;
+					background-color:#eee;
+					}
+			</style>
 		</head>
 	<body>
 		<h1>Platform: {{ platform.name }}</h1>
-		<p>Games: </p>
-			{% if games %}
-			<ul>
-			{% for game in games.all %}
-			<li>
-			<A HREF="/games/{{game.name}}">{{game.name}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% else %}
-			<p>Doesn't exist games.</p>
-			{% endif %}
-		<p>Developers: </p>
-			{% if developers %}
-			<ul>
-			{% for developer in developers %}
-			<li>
-			<A HREF="/users/{{developer.username}}">{{developer.username}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% else %}
-			<p>Doesn't exist developers.</p>
-			{% endif %}
-		<p>Companies that work with it: </p>
-			{% if companies %}
-			<ul>
-			{% for company in companies %}
-			<li>
-			<A HREF="/companies/{{company.name}}">{{company.name}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% else %}
-			<p>Doesn't exist companies.</p>
-			{% endif %}
+		<div id="Content">
+			<p>Games: </p>
+				{% if games %}
+				<ul>
+				{% for game in games.all %}
+				<li>
+				<A HREF="/games/{{game.name}}">{{game.name}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<p>Doesn't exist games.</p>
+				{% endif %}
+			<p>Developers: </p>
+				{% if developers %}
+				<ul>
+				{% for developer in developers %}
+				<li>
+				<A HREF="/developers/{{developer.username}}">{{developer.username}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<p>Doesn't exist developers.</p>
+				{% endif %}
+			<p>Companies that work with it: </p>
+				{% if companies %}
+				<ul>
+				{% for company in companies %}
+				<li>
+				<A HREF="/companies/{{company.name}}">{{company.name}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<p>Doesn't exist companies.</p>
+				{% endif %}
+		</div>
+		
+		<br><br>
+		<form>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
+		</form>
 	</body>
 </html>

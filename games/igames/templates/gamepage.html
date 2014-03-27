@@ -1,33 +1,57 @@
 <html>
 		<head>
 		<title>{{ game.name }}</title>
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:350px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
 		</head>
 	<body>
 		<h1>Game: {{ game.name }}</h1>
-		<p>Release date: {{ game.release_date }}</p>
-		<p>Price: {{ game.price }}</p>
-		<p>Description: {{ game.description }}</p>
-		<p>Company: <A HREF="/companies/{{game.company}}">{{game.company}}</A></p>
-		<p>Developers: </p>
-			{% if game.developers %}
-			<ul>
-			{% for developer in game.developers.all %}
-			<li>
-			<A HREF="/users/{{developer.username}}">{{developer.username}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% endif %}
-		<p>Platforms: </p>
-			{% if game.platforms %}
-			<ul>
-			{% for platform in game.platforms.all %}
-			<li>
-			<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% endif %}
+
+		<div id="Content">
+			<p>Release date: {{ game.release_date }}</p>
+			<p>Price: {{ game.price }} €</p>
+			<p>Description: {{ game.description }}</p>
+			<p>Company: <A HREF="/companies/{{game.company}}">{{game.company}}</A></p>
+			<p>Developers: </p>
+				{% if game.developers %}
+				<ul>
+				{% for developer in game.developers.all %}
+				<li>
+				<A HREF="/developers/{{developer.username}}">{{developer.username}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% endif %}
+			<p>Platforms: </p>
+				{% if game.platforms %}
+				<ul>
+				{% for platform in game.platforms.all %}
+				<li>
+				<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% endif %}
+		</div>
+
+		<br><br>
+		<form>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
+		</form>
 
 	</body>
 </html>

@@ -1,45 +1,63 @@
 <html>
 		<head>
-		<title>{{ company.name }}</title>
+			<title>{{ company.name }}</title>
+			<style type="text/css">
+				body {
+					margin:50px 0px; padding:0px;
+					text-align:center;
+					}
+	
+				#Content {
+					width:350px;
+					margin:0px auto;
+					text-align:left;
+					padding:15px;
+					border:1px dashed #333;
+					background-color:#eee;
+					}
+			</style>
 		</head>
 	<body>
 		<h1>Company: {{ company.name }}</h1>
-		<p>Fundation date: {{ company.fundation_date }}</p>
-		<p>Games: </p>
-			{% if games %}
-			<ul>
-			{% for game in games.all %}
-			<li>
-			<A HREF="http://localhost:8000/games/{{game.name}}">{{game.name}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% else %}
-			<p>Doesn't exist games.</p>
-			{% endif %}
-		<p>Developers: </p>
-			{% if developers %}
-			<ul>
-			{% for developer in developers %}
-			<li>
-			<A HREF="http://localhost:8000/users/{{developer.username}}">{{developer.username}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% else %}
-			<p>Doesn't exist developers.</p>
-			{% endif %}
-		<p>Developes in these platforms: </p>
-			{% if platforms %}
-			<ul>
-			{% for platform in platforms %}
-			<li>
-			<A HREF="http://localhost:8000/platforms/{{platform.name}}">{{platform.name}}</A>
-			</li>
-			{% endfor %}
-			</ul>
-			{% else %}
-			<p>Doesn't exist platforms.</p>
-			{% endif %}
+
+		<div id="Content">
+			<p>Fundation date: {{ company.fundation_date }}</p>
+			<p>Games: </p>
+				{% if games %}
+				<ul>
+				{% for game in games.all %}
+				<li>
+				<A HREF="/games/{{game.name}}">{{game.name}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<p>Doesn't exist games.</p>
+				{% endif %}
+			<p>Developers: </p>
+				{% if developers %}
+				<ul>
+				{% for developer in developers %}
+				<li>
+				<A HREF="/developers/{{developer.username}}">{{developer.username}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<p>Doesn't exist developers.</p>
+				{% endif %}
+			<p>Developes in these platforms: </p>
+				{% if platforms %}
+				<ul>
+				{% for platform in platforms %}
+				<li>
+				<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
+				</li>
+				{% endfor %}
+				</ul>
+				{% else %}
+				<p>Doesn't exist platforms.</p>
+				{% endif %}
+		</div>
 	</body>
 </html>

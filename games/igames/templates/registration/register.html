@@ -1,14 +1,36 @@
 <html>
 	<head>
 		<title>Create an accoun</title>
+
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:1000px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
+
 	</head>
 	<body>
 		  <h1>Create an account</h1>
-
-		  <form action="" method="post">
-		      {{ form.as_p }}
-		      <input type="submit" value="Create the account">
-		      {% csrf_token %}
-		  </form>
+		  <br><br>
+		  <div id="Content">
+			  <form action="" method="post">
+			      {{ form.as_p }}
+			      <input type="submit" value="Create the account">
+			      {% csrf_token %}
+			  </form>
+		  </div>
+		
+		<br><br>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
 	</body>
 </html>

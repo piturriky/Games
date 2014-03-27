@@ -1,25 +1,43 @@
 <html>
 	<head>
 		<title>{{ title}}</title>
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:350px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>All the {{ title }}:</h1>
-		{% if vars %}
-		<ul>
-		{% for var in vars %}
-		{% if var.name %}
-		<li>
-		<A HREF="http://localhost:8000/{{link}}/{{var.name}}">{{var.name}}</A>
-		</li>
-		{% else %}
-		<li>
-		<A HREF="http://localhost:8000/{{link}}/{{var.username}}">{{var.username}}</A>
-		</li>
-		{% endif %}
-		{% endfor %}
-		</ul>
-		{% else %}
-		<p>Doesn't exist {{ title}}.</p>
-		{% endif %}
+		
+		<div id="Content">
+			{% if vars %}
+			<ul>
+			{% for var in vars %}
+			{% if var.name %}
+			<li>
+			<A HREF="/{{link}}/{{var.name}}">{{var.name}}</A>
+			</li>
+			{% else %}
+			<li>
+			<A HREF="/{{link}}/{{var.username}}">{{var.username}}</A>
+			</li>
+			{% endif %}
+			{% endfor %}
+			</ul>
+			{% else %}
+			<p>Doesn't exist {{ title}}.</p>
+			{% endif %}
+		</div>
 	</body>
 </html>

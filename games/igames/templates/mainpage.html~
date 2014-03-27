@@ -1,34 +1,56 @@
 <html>
 	<head>
 		<title>{{ titlehead}}</title>
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:700px;
+			margin:0px auto;
+			text-align:center;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>{{ pagetitle }}</h1>
 		<p>{{ contentbody }}</p>
+		<br><br>
+		
+		<div id="Content">
+			{% if user.username %}
+			<p>Welcome {{ user.username }}!
+			Here you will be able to manage your application.</p>
+		
+			<form>
+			<input Type="BUTTON" VALUE="Profile" ONCLICK="window.location.href='/developers/{{user.username}}'">
+			</form>
+			<br><br><br><br>
 
-	{% if user.username %}
-	<p>Welcome {{ user.username }}!
-	Here you will be able to manage your application.</p>
+			<p>Aplication Database:</p>
+			<form>
+			<input Type="BUTTON" VALUE="Developers" ONCLICK="window.location.href='/developers'">
+			<input Type="BUTTON" VALUE="Games" ONCLICK="window.location.href='/games'">
+			<input Type="BUTTON" VALUE="Companies" ONCLICK="window.location.href='/companies'">
+			<input Type="BUTTON" VALUE="Platforms" ONCLICK="window.location.href='/platforms'">
+			</form>
 
-	<form>
-	<input Type="BUTTON" VALUE="Profile" ONCLICK="window.location.href='/developers/{{user.username}}'">
-	</form>
-
-	<form>
-	<input Type="BUTTON" VALUE="All developers" ONCLICK="window.location.href='/developers'">
-	<input Type="BUTTON" VALUE="All games" ONCLICK="window.location.href='/games'">
-	<input Type="BUTTON" VALUE="All companies" ONCLICK="window.location.href='/companies'">
-	<input Type="BUTTON" VALUE="All platforms" ONCLICK="window.location.href='/platforms'">
-	</form>
-
-	<form>
-	<input Type="BUTTON" VALUE="Log Out" ONCLICK="window.location.href='/logout'">
-	</form>
-	{% else %}
-	<p>Welcome anonymus,
-	you must <a href="/login/">Sign in</a>
-	in order to manage the application.</p>
-	{% endif %}
-
+			{% else %}
+			<p>Welcome anonymus,
+			you must <a href="/login/">Sign in</a>
+			in order to manage the application.</p>
+			{% endif %}
+		</div>
+		{% if user.username %}
+		<br><br>
+		<form>
+		<input Type="BUTTON" VALUE="Log Out" ONCLICK="window.location.href='/logout'">
+		</form>
+		{% endif %}
 	</body>
 </html>

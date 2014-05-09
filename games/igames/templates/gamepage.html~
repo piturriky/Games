@@ -22,7 +22,7 @@
 
 		<div id="Content">
 			<p>Release date: {{ game.release_date }}</p>
-			<p>Price: {{ game.price }}</p>
+			<p>Price: {{ game.price }} €</p>
 			<p>Description: {{ game.description }}</p>
 			<p>Company: <A HREF="/companies/{{game.company}}">{{game.company}}</A></p>
 			<p>Developers: </p>
@@ -45,6 +45,14 @@
 				{% endfor %}
 				</ul>
 				{% endif %}
+			<p> {{owner}}</p>
+			{% if owner %}
+			<br>
+			<form>
+			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/'">
+			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/logout'">
+			</form>
+			{% endif %}
 		</div>
 
 		<br><br>

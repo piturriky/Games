@@ -30,7 +30,11 @@
 			<form>
 			<input Type="BUTTON" VALUE="Profile" ONCLICK="window.location.href='/developers/{{user.username}}'">
 			</form>
-			<br><br><br><br>
+			<form>
+			<input Type="BUTTON" VALUE="Create Game" ONCLICK="window.location.href='/creategame'">
+			<input Type="BUTTON" VALUE="My Games" ONCLICK="window.location.href='/mygames'">
+			</form>
+			<br><br>
 
 			<p>Aplication Database:</p>
 			<form>

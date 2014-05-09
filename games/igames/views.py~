@@ -10,6 +10,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
+from django.views.generic import UpdateView
 from sets import Set
 from igames.forms import *
 
@@ -43,7 +45,7 @@ def userpage(request, username, fm):
 	
 		template = get_template('userpage.html')
 		variables = Context({
-			'username': username,
+			'user': user,
 			'games': games,
 			'platforms': platforms,
 			'companies': companies,
@@ -94,8 +96,15 @@ def gamepage(request, gamename,fm):
 
 	if not fm:
 		template = get_template('gamepage.html')
+		owner = False
+		for developer in game.developers.all():
+			if developer.username == request.user.username:
+				owner = True
+
 		variables = Context({
 			'game': game,
+			'owner': owner,
+			'developers':game.developers.all(),
 			})
 		output = template.render(variables)
 		return HttpResponse(output)
@@ -256,3 +265,40 @@ def register(request):
     return render(request, "registration/register.html", {
         'form': form,
     })
+
+class GameCreate(CreateView):
+	model = Game
+	template_name = 'form.html'
+	form_class = GameForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(GameCreate,self).form_valid(form)
+
+def mygamespage(request, fm):
+	if not request.user.is_authenticated():
+        	return redirect('/login')
+	try:
+		user = User.objects.get(username=request.user.username)
+	except:
+		raise Http404('User not found.')
+
+	if not fm:
+		template = get_template('generalpage.html')
+		games = Game.objects.filter(developers=user)
+		variables = Context({
+			'title': 'Games',
+			'vars': games,
+			'link': 'games',
+			})
+		output = template.render(variables)
+		return HttpResponse(output)
+	elif fm == ".xml":
+		data = serializers.serialize("xml",Game.objects.filter(developers=user))
+		return HttpResponse(data, mimetype="application/xml")
+	elif fm == '.json':
+		data = serializers.serialize("json",Game.objects.filter(developers=user))
+		return HttpResponse(data, mimetype="application/json")
+	else:
+		raise Http404('Page not found.')
+

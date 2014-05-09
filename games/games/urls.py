@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-
+from django.views.generic import UpdateView, DeleteView
 from igames.views import *
 
 # Uncomment the next two lines to enable the admin:
@@ -35,4 +35,20 @@ urlpatterns = patterns('',
     url(r'^logout/$','django.contrib.auth.views.logout', {'next_page':'/'}),
 
     url(r'^register/$', register),
+
+    url(r'^mygames(.*)/$', mygamespage),
+
+    url(r'^creategame/$', GameCreate.as_view(success_url="/")), #ARREGLAR URL 
+    url(r'^editgame/(?P<slug>\w+)/$', UpdateView.as_view(
+				slug_field ='name',
+				model = Game,
+				template_name = 'form.html',
+				form_class = GameForm,
+				success_url="/")), #ARREGLAR URL 
+    url(r'^deletegame/(?P<slug>\w+)/$', DeleteView.as_view(
+				slug_field ='name',
+				model = Game,
+				template_name = 'formdelete.html',
+				success_url="/")), #ARREGLAR URL 
+
 )

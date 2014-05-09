@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Create a Game</title>
+
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:1000px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
+
+	</head>
+	<body>
+		  <h1>Create a Game</h1>
+		  <br><br>
+		  <div id="Content">
+			  <form action="" method="post">
+			      {% csrf_token %}
+			      <table>
+			     	 {{ form.as_table }}
+			      </table>
+			      <input type="submit" value="Create the Game" ONCLICK="window.location.href='/'">
+			      
+			  </form>
+		  </div>
+		
+		<br><br>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+	</body>
+</html>

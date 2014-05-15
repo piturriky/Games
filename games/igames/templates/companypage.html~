@@ -59,5 +59,11 @@
 				<p>Doesn't exist platforms.</p>
 				{% endif %}
 		</div>
+
+		<br><br>
+		<form>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
+		</form>
 	</body>
 </html>

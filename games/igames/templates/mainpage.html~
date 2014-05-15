@@ -26,7 +26,7 @@
 			{% if user.username %}
 			<p>Welcome {{ user.username }}!
 			Here you will be able to manage your application.</p>
-		
+			<br>
 			<form>
 			<input Type="BUTTON" VALUE="Profile" ONCLICK="window.location.href='/developers/{{user.username}}'">
 			</form>
@@ -34,7 +34,7 @@
 			<input Type="BUTTON" VALUE="Create Game" ONCLICK="window.location.href='/creategame'">
 			<input Type="BUTTON" VALUE="My Games" ONCLICK="window.location.href='/mygames'">
 			</form>
-			<br><br>
+			<br><br><br><br>
 
 			<p>Aplication Database:</p>
 			<form>

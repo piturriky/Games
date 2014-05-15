@@ -14,6 +14,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic import UpdateView
 from sets import Set
 from igames.forms import *
+import json
+import os.path
 
 def mainpage(request):
 	template = get_template('mainpage.html')
@@ -97,14 +99,16 @@ def gamepage(request, gamename,fm):
 	if not fm:
 		template = get_template('gamepage.html')
 		owner = False
-		for developer in game.developers.all():
-			if developer.username == request.user.username:
-				owner = True
-
+		if request.user.is_staff:
+			owner = True
+		else:
+			for developer in game.developers.all():
+				if developer.username == request.user.username:
+					owner = True
+		
 		variables = Context({
 			'game': game,
 			'owner': owner,
-			'developers':game.developers.all(),
 			})
 		output = template.render(variables)
 		return HttpResponse(output)
@@ -268,7 +272,7 @@ def register(request):
 
 class GameCreate(CreateView):
 	model = Game
-	template_name = 'form.html'
+	template_name = 'formcreate.html'
 	form_class = GameForm
 
 	def form_valid(self,form):
@@ -302,3 +306,15 @@ def mygamespage(request, fm):
 	else:
 		raise Http404('Page not found.')
 
+def resources(request, resource):
+	os.path.join(os.path.dirname(__file__),'/templates/resources')
+	if resource == "countries.json":
+		
+		json_data=open(os.path.join(os.path.dirname(__file__),'./templates/resources/countries.json'))
+		data=json.load(json_data)
+		
+		print (data)
+		#data2=json.dumps(json_data)
+		json_data.close()
+
+		return HttpResponse(data, mimetype="application/json")

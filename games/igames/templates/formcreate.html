@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Delete a Game</title>
+		<title>Create a Game</title>
 
 		<style type="text/css">
 		body {
@@ -17,17 +17,37 @@
 			background-color:#eee;
 			}
 		</style>
+	
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+		<script>
+			$(function() {
+				var v;
+				$.getJSON("/resources/countries.json",function(data){
+						v = data[0];
+				});
+				$( "#id_genre" ).autocomplete({
+					source: v
+				});
+			});
+		</script>
 
 	</head>
 	<body>
-		  <h1>Delete a Game</h1>
+		  <h1>Create Game</h1>
 		  <br><br>
 		  <div id="Content">
 			  <form action="" method="post">
 			      {% csrf_token %}
-			      <p> Are you sure you want to delete the game: "{{object}}"?</p>
-			      <input type="submit" value="Confirm">
+			      <table>
+			     	 {{ form.as_table }}
+			      </table>
+			      <br><br>
+			      <input type="submit" value="Create Game">
 			      <input type="BUTTON" value="Cancel" action ="action" ONCLICK="history.go(-1);">
+			      
 			  </form>
 		  </div>
 		

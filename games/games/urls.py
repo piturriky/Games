@@ -42,7 +42,7 @@ urlpatterns = patterns('',
     url(r'^editgame/(?P<slug>\w+)/$', UpdateView.as_view(
 				slug_field ='name',
 				model = Game,
-				template_name = 'form.html',
+				template_name = 'formedit.html',
 				form_class = GameForm,
 				success_url="/")), #ARREGLAR URL 
     url(r'^deletegame/(?P<slug>\w+)/$', DeleteView.as_view(
@@ -50,5 +50,6 @@ urlpatterns = patterns('',
 				model = Game,
 				template_name = 'formdelete.html',
 				success_url="/")), #ARREGLAR URL 
+   url(r'^resources/(.*)/$', resources),
 
 )

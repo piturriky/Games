@@ -22,8 +22,9 @@
 
 		<div id="Content">
 			<p>Name: {{ user.first_name }}</p>
-			<p>Second name: {{ user.second_name }}</p>
+			<p>Last name: {{ user.last_name }}</p>
 			<p>Email: {{ user.email }}</p>
+			<p>Country: {{ user.country }}</p>
 			<br>
 			<p>Games developed:</p>
 			{% if games %}

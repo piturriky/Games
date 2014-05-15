@@ -28,7 +28,7 @@
 			      <table>
 			     	 {{ form.as_table }}
 			      </table>
-			      <input type="submit" value="Create the Game" ONCLICK="window.location.href='/'">
+			      <input type="submit" value="Create the Game">
 			      
 			  </form>
 		  </div>

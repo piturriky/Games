@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Create a Game</title>
+		<title>Edit Game</title>
 
 		<style type="text/css">
 		body {
@@ -20,7 +20,7 @@
 
 	</head>
 	<body>
-		  <h1>Create a Game</h1>
+		  <h1>Edit Game</h1>
 		  <br><br>
 		  <div id="Content">
 			  <form action="" method="post">
@@ -28,12 +28,14 @@
 			      <table>
 			     	 {{ form.as_table }}
 			      </table>
-			      <input type="submit" value="Create the Game">
-			      
+			      <br><br>
+			      <input type="submit" value="Edit">
+			      <input type="BUTTON" value="Cancel" action ="action" ONCLICK="history.go(-1);">
 			  </form>
 		  </div>
 		
 		<br><br>
 		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
 	</body>
 </html>

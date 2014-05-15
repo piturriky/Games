@@ -15,6 +15,9 @@
 			border:1px dashed #333;
 			background-color:#eee;
 			}
+		#Content1 {
+			text-align:center;
+			}
 		</style>
 		</head>
 	<body>
@@ -23,6 +26,7 @@
 		<div id="Content">
 			<p>Release date: {{ game.release_date }}</p>
 			<p>Price: {{ game.price }} €</p>
+			<p>Made in: {{ game.made_in }} €</p>
 			<p>Description: {{ game.description }}</p>
 			<p>Company: <A HREF="/companies/{{game.company}}">{{game.company}}</A></p>
 			<p>Developers: </p>
@@ -45,12 +49,12 @@
 				{% endfor %}
 				</ul>
 				{% endif %}
-			<p> {{owner}}</p>
+
 			{% if owner %}
 			<br>
-			<form>
-			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/'">
-			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/logout'">
+			<form id="Content1">
+			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/editgame/{{ game.name }}'">
+			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/deletegame/{{ game.name }}'">
 			</form>
 			{% endif %}
 		</div>

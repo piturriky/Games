@@ -17,8 +17,22 @@
 			background-color:#eee;
 			}
 		</style>
+	
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+		<script>
+			$(function() {
+				var countries = ["Afghanistan", "Albania","Zaire", "Zambia", "Zimbabwe"];
+				$( "#id_country" ).autocomplete({
+					source: countries
+				});
+			});
+		</script>
 
 	</head>
+
 	<body>
 		  <h1>Create an account</h1>
 		  <br><br>
@@ -29,7 +43,8 @@
 			      {% csrf_token %}
 			  </form>
 		  </div>
-	
+		
+		<br><br>
 		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
 	</body>
 </html>

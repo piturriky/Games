@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from models import Game
-#from django.contrib.admin import widgets 
+from models import Game,Platform,Company
+from django.forms.extras.widgets import SelectDateWidget
+from datetime import date
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -23,9 +24,16 @@ class UserCreateForm(UserCreationForm):
         return user
 
 class GameForm(forms.ModelForm):
+	release_date = forms.DateField(widget=SelectDateWidget(years=range(date.today().year,1980,-1)))
 	class Meta:
 		model = Game
-		#exclude = ('release_date')#ARREGLAR
-	#def __init__(self, *args, **kwargs):
-        #	super(GameForm, self).__init__(*args, **kwargs)
-        #	self.fields['release_date'].widget = widgets.AdminDateWidget()
+
+class CompanyForm(forms.ModelForm):
+	fundation_date = forms.DateField(widget=SelectDateWidget(years=range(date.today().year,1900,-1)))
+	class Meta:
+		model = Company
+
+class PlatformForm(forms.ModelForm):
+	class Meta:
+		model = Platform
+

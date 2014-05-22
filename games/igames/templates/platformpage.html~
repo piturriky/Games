@@ -2,19 +2,22 @@
 		<head>
 			<title>{{ platform.name }}</title>
 			<style type="text/css">
-			body {
-				margin:50px 0px; padding:0px;
-				text-align:center;
-				}
+				body {
+					margin:50px 0px; padding:0px;
+					text-align:center;
+					}
 	
-			#Content {
-				width:350px;
-				margin:0px auto;
-				text-align:left;
-				padding:15px;
-				border:1px dashed #333;
-				background-color:#eee;
-				}
+				#Content {
+					width:350px;
+					margin:0px auto;
+					text-align:left;
+					padding:15px;
+					border:1px dashed #333;
+					background-color:#eee;
+					}
+				#Content1 {
+					text-align:center;
+					}
 			</style>
 		</head>
 	<body>
@@ -56,6 +59,14 @@
 				{% else %}
 				<p>Doesn't exist companies.</p>
 				{% endif %}
+
+			{% if owner %}
+			<br>
+			<form id="Content1">
+			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/platforms/{{ platform.name }}/edit'">
+			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/platforms/{{ platform.name }}/delete'">
+			</form>
+			{% endif %}
 		</div>
 		
 		<br><br>

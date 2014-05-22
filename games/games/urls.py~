@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import UpdateView, DeleteView
 from igames.views import *
+from rest_framework.urlpatterns import format_suffix_patterns
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -19,6 +20,38 @@ urlpatterns = patterns('',
 
     url(r'^$', mainpage, name='home'),
 
+    url(r'^login/$','django.contrib.auth.views.login'),
+    url(r'^logout/$','django.contrib.auth.views.logout', {'next_page':'/'}),
+
+    url(r'^register/$', register),
+
+    url(r'^mygames(.*)/$', mygamespage),
+    ###############################################################
+    url(r'^games/create/$', GameCreate.as_view(success_url="/")), 
+    url(r'^games/(?P<slug>\w+)/edit/$', GameEdit.as_view(
+				slug_field ='name',
+				success_url="/")),  
+    url(r'^games/(?P<slug>\w+)/delete/$', GameDelete.as_view(
+				slug_field ='name',
+				success_url="/")), 
+
+    url(r'^companies/create/$', CompanyCreate.as_view(success_url="/")), 
+    url(r'^companies/(?P<slug>\w+)/edit/$', CompanyEdit.as_view(
+				slug_field ='name',
+				success_url="/")),  
+    url(r'^companies/(?P<slug>\w+)/delete/$', CompanyDelete.as_view(
+				slug_field ='name',
+				success_url="/")), 
+
+    url(r'^platforms/create/$', PlatformCreate.as_view(success_url="/")), 
+    url(r'^platforms/(?P<slug>\w+)/edit/$', PlatformEdit.as_view(
+				slug_field ='name',
+				success_url="/")),  
+    url(r'^platforms/(?P<slug>\w+)/delete/$', PlatformDelete.as_view(
+				slug_field ='name',
+				success_url="/")),
+    ###############################################################
+
     url(r'^developers/(\w+)(.*)/$', userpage),
     url(r'^developers(.*)/$', userspage),
 
@@ -31,25 +64,18 @@ urlpatterns = patterns('',
     url(r'^platforms/(\w+)(.*)/$', platformpage),
     url(r'^platforms(.*)/$', platformspage),
 
-    url(r'^login/$','django.contrib.auth.views.login'),
-    url(r'^logout/$','django.contrib.auth.views.logout', {'next_page':'/'}),
 
-    url(r'^register/$', register),
+    url(r'^api/developers/(?P<username>\w+)/$', APIDeveloperDetail.as_view(),name = 'user-detail'),
+    url(r'^api/developers/$', APIDeveloperList.as_view(),name = 'user-list'),
 
-    url(r'^mygames(.*)/$', mygamespage),
+    url(r'^api/games/(?P<name>\w+)/$',APIGameDetail.as_view(),name = 'game-detail'),
+    url(r'^api/games/$', APIGameList.as_view(),name = 'game-list'),
 
-    url(r'^creategame/$', GameCreate.as_view(success_url="/")), #ARREGLAR URL 
-    url(r'^editgame/(?P<slug>\w+)/$', UpdateView.as_view(
-				slug_field ='name',
-				model = Game,
-				template_name = 'formedit.html',
-				form_class = GameForm,
-				success_url="/")), #ARREGLAR URL 
-    url(r'^deletegame/(?P<slug>\w+)/$', DeleteView.as_view(
-				slug_field ='name',
-				model = Game,
-				template_name = 'formdelete.html',
-				success_url="/")), #ARREGLAR URL 
-   url(r'^resources/(\w+)(.*)/$', resources),
+    url(r'^api/companies/(?P<name>\w+)/$', APICompanyDetail.as_view(),name = 'company-detail'),
+    url(r'^api/companies/$', APICompanyList.as_view(),name = 'company-list'),
 
+    url(r'^api/platforms/(?P<name>\w+)/$', APIPlatformDetail.as_view(),name = 'platform-detail'),
+    url(r'^api/platforms/$', APIPlatformList.as_view(),name = 'platform-list'),
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api' ,'json', 'xml'])

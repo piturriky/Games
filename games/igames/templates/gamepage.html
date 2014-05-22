@@ -53,8 +53,8 @@
 			{% if owner %}
 			<br>
 			<form id="Content1">
-			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/editgame/{{ game.name }}'">
-			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/deletegame/{{ game.name }}'">
+			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/games/{{ game.name }}/edit'">
+			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/games/{{ game.name }}/delete'">
 			</form>
 			{% endif %}
 		</div>

@@ -1,5 +1,6 @@
 <html>
 	<head>
+		{% load staticfiles %}
 		<title>{{ title}}</title>
 		<style type="text/css">
 		body {
@@ -22,19 +23,28 @@
 		
 		<div id="Content">
 			{% if vars %}
-			<ul>
+
+			<table style="width:300px">
 			{% for var in vars %}
 			{% if var.name %}
-			<li>
-			<A HREF="/{{link}}/{{var.name}}">{{var.name}}</A>
-			</li>
+			<tr>
+			<td> <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <A HREF="/{{link}}/{{var.name}}"> {{var.name}}</A> </p></td>
+			{% if staff %}
+			<td> <a href="/{{link}}/{{var.name}}/edit"><img src="{% static "edit.png" %}"width="20" height="20"></a> </td>
+			<td> <a href="/{{link}}/{{var.name}}/delete"><img src="{% static "delete.png" %}"width="20" height="20"></a> </td>
+			{% endif %}
+			</tr>
+
 			{% else %}
-			<li>
-			<A HREF="/{{link}}/{{var.username}}">{{var.username}}</A>
-			</li>
+			
+			<tr>
+			<td><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <A HREF="/{{link}}/{{var.username}}">{{var.username}}</A></p></td>
+			</tr>
+			
 			{% endif %}
 			{% endfor %}
-			</ul>
+			</table>
+			
 			{% else %}
 			<p>Doesn't exist {{ title}}.</p>
 			{% endif %}

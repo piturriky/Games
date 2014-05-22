@@ -10,12 +10,17 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
-from django.views.generic import UpdateView
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from sets import Set
 from igames.forms import *
 import json
 import os.path
+from django.contrib.auth.decorators import login_required
+from django.core import urlresolvers
+from django.core.exceptions import PermissionDenied
+from django.utils.decorators import method_decorator
+from rest_framework import generics, permissions
+from serializers import *
 
 def mainpage(request):
 	template = get_template('mainpage.html')
@@ -162,11 +167,15 @@ def companypage(request, companyname, fm):
 				developers.add(developer)
 
 		template = get_template('companypage.html')
+		owner = False
+		if request.user.is_staff:
+			owner = True
 		variables = Context({
 			'company': company,
 			'games':games,
 			'platforms': platforms,
 			'developers':developers,
+			'owner': owner,
 			})
 		output = template.render(variables)
 		return HttpResponse(output)
@@ -219,11 +228,15 @@ def platformpage(request, platformname,fm):
 				developers.add(developer)
 
 		template = get_template('platformpage.html')
+		owner = False
+		if request.user.is_staff:
+			owner = True
 		variables = Context({
 			'platform': platform,
 			'games':games,
 			'companies': companies,
 			'developers':developers,
+			'owner':owner,
 			})
 		output = template.render(variables)
 		return HttpResponse(output)
@@ -270,15 +283,6 @@ def register(request):
         'form': form,
     })
 
-class GameCreate(CreateView):
-	model = Game
-	template_name = 'formcreate.html'
-	form_class = GameForm
-
-	def form_valid(self,form):
-		form.instance.user = self.request.user
-		return super(GameCreate,self).form_valid(form)
-
 def mygamespage(request, fm):
 	if not request.user.is_authenticated():
         	return redirect('/login')
@@ -306,15 +310,225 @@ def mygamespage(request, fm):
 	else:
 		raise Http404('Page not found.')
 
-def resources(request, resource):
-	os.path.join(os.path.dirname(__file__),'/templates/resources')
-	if resource == "countries.json":
-		
-		json_data=open(os.path.join(os.path.dirname(__file__),'./templates/resources/countries.json'))
-		data=json.load(json_data)
-		
-		print (data)
-		#data2=json.dumps(json_data)
-		json_data.close()
+class LoginRequiredMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
-		return HttpResponse(data, mimetype="application/json")
+class CheckIsOwnerOrAdminMixin(object):
+    def get_object(self, *args, **kwargs):
+        obj = super(CheckIsOwnerOrAdminMixin, self).get_object(*args, **kwargs)
+	owner = False
+        if self.request.user.is_staff:
+            owner = True
+	for developer in obj.developers.all():
+		if developer.username == self.request.user.username:
+			owner = True
+	if not owner:
+		raise PermissionDenied
+        return obj
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CheckIsOwnerOrAdminMixin, self).dispatch(*args, **kwargs)
+
+class CheckIsAdminMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+	if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super(CheckIsAdminMixin, self).dispatch(*args, **kwargs)
+
+class GameCreate(LoginRequiredMixin,CreateView):
+	model = Game
+	template_name = 'form.html'
+	form_class = GameForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(GameCreate,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(GameCreate, self).get_context_data(**kwargs)
+		context['title'] = 'Create Game'
+		return context
+
+class GameEdit(CheckIsOwnerOrAdminMixin,UpdateView):
+	model = Game
+	template_name = 'form.html'
+	form_class = GameForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(GameEdit,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(GameEdit, self).get_context_data(**kwargs)
+		context['title'] = 'Edit Game'
+		return context
+
+
+class GameDelete(CheckIsOwnerOrAdminMixin,DeleteView):
+	model = Game
+	template_name = 'formdelete.html'
+	form_class = GameForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(GameDelete,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(GameDelete, self).get_context_data(**kwargs)
+		context['title'] = 'Delete Game'
+		return context
+
+class CompanyCreate(CheckIsAdminMixin,CreateView):
+	model = Company
+	template_name = 'form.html'
+	form_class = CompanyForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(CompanyCreate,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(CompanyCreate, self).get_context_data(**kwargs)
+		context['title'] = 'Create Company'
+		return context
+
+class CompanyEdit(CheckIsAdminMixin,UpdateView):
+	model = Company
+	template_name = 'form.html'
+	form_class = CompanyForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(CompanyEdit,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(CompanyEdit, self).get_context_data(**kwargs)
+		context['title'] = 'Edit Company'
+		return context
+
+class CompanyDelete(CheckIsAdminMixin,DeleteView):
+	model = Company
+	template_name = 'formdelete.html'
+	form_class = CompanyForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(CompanyDelete,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(CompanyDelete, self).get_context_data(**kwargs)
+		context['title'] = 'Delete Company'
+		return context
+
+class PlatformCreate(CheckIsAdminMixin,CreateView):
+	model = Platform
+	template_name = 'form.html'
+	form_class = PlatformForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(PlatformCreate,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(PlatformCreate, self).get_context_data(**kwargs)
+		context['title'] = 'Create Platform'
+		return context
+
+class PlatformEdit(CheckIsAdminMixin,UpdateView):
+	model = Platform
+	template_name = 'form.html'
+	form_class = PlatformForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(PlatformEdit,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(PlatformEdit, self).get_context_data(**kwargs)
+		context['title'] = 'Edit Platform'
+		return context
+
+class PlatformDelete(CheckIsAdminMixin,DeleteView):
+	model = Platform
+	template_name = 'formdelete.html'
+	form_class = PlatformForm
+
+	def form_valid(self,form):
+		form.instance.user = self.request.user
+		return super(PlatformDelete,self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(PlatformDelete, self).get_context_data(**kwargs)
+		context['title'] = 'Delete Platform'
+		return context
+
+
+### RESTful API views ###
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+	if request.user.is_staff:
+		return True
+
+	if isinstance(obj,Game):
+		for developer in obj.developers.all():
+			if developer.username == request.user.username:
+				return True
+        return False
+
+class APIDeveloperList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = User
+    serializer_class = DeveloperSerializer
+    lookup_field = 'username'
+
+class APIDeveloperDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = User
+    serializer_class = DeveloperSerializer
+    lookup_field = 'username'
+
+class APIGameList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Game
+    serializer_class = GameSerializer
+    lookup_field = 'name'
+
+class APIGameDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Game
+    serializer_class = GameSerializer
+    lookup_field = 'name'
+
+class APICompanyList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Company
+    serializer_class = CompanySerializer
+    lookup_field = 'name'
+
+class APICompanyDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Company
+    serializer_class = CompanySerializer
+    lookup_field = 'name'
+
+class APIPlatformList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Platform
+    serializer_class = PlatformSerializer
+    lookup_field = 'name'
+
+class APIPlatformDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Platform
+    serializer_class = PlatformSerializer
+    lookup_field = 'name'

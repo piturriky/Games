@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Delete a Game</title>
+		<title>{{ title }}</title>
 
 		<style type="text/css">
 		body {
@@ -20,19 +20,19 @@
 
 	</head>
 	<body>
-		  <h1>Delete a Game</h1>
+		  <h1>{{ title }}</h1>
 		  <br><br>
 		  <div id="Content">
 			  <form action="" method="post">
 			      {% csrf_token %}
 			      <p> Are you sure you want to delete the game: "{{object}}"?</p>
 			      <input type="submit" value="Confirm">
-			      <input type="BUTTON" value="Cancel" ONCLICK="window.location.href='/'">
+			      <input type="BUTTON" value="Cancel" action ="action" ONCLICK="history.go(-1);">
 			  </form>
 		  </div>
 		
 		<br><br>
-		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">ç
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
 		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
 	</body>
 </html>

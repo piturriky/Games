@@ -15,6 +15,9 @@
 					border:1px dashed #333;
 					background-color:#eee;
 					}
+				#Content1 {
+					text-align:center;
+					}
 			</style>
 		</head>
 	<body>
@@ -22,6 +25,8 @@
 
 		<div id="Content">
 			<p>Fundation date: {{ company.fundation_date }}</p>
+			<p>Country: {{ company.country }}</p>
+			<p>State or Province: {{ company.stateOrProvince }}</p>
 			<p>Games: </p>
 				{% if games %}
 				<ul>
@@ -58,6 +63,14 @@
 				{% else %}
 				<p>Doesn't exist platforms.</p>
 				{% endif %}
+
+			{% if owner %}
+			<br>
+			<form id="Content1">
+			<input Type="BUTTON" VALUE="Edit game" ONCLICK="window.location.href='/companies/{{ company.name }}/edit'">
+			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/companies/{{ company.name }}/delete'">
+			</form>
+			{% endif %}
 		</div>
 
 		<br><br>

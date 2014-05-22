@@ -31,11 +31,17 @@
 			<input Type="BUTTON" VALUE="Profile" ONCLICK="window.location.href='/developers/{{user.username}}'">
 			</form>
 			<form>
-			<input Type="BUTTON" VALUE="Create Game" ONCLICK="window.location.href='/creategame'">
+			<input Type="BUTTON" VALUE="Create Game" ONCLICK="window.location.href='/games/create'">
 			<input Type="BUTTON" VALUE="My Games" ONCLICK="window.location.href='/mygames'">
 			</form>
-			<br><br>
-
+			<br>
+			{% if user.is_staff %}
+				<p>ADMIN:</p>
+				<input Type="BUTTON" VALUE="Create Company" ONCLICK="window.location.href='/companies/create'">
+				<input Type="BUTTON" VALUE="Create Platform" ONCLICK="window.location.href='/platforms/create'">
+				<br><br>
+			{% endif %}
+			<br>
 			<p>Aplication Database:</p>
 			<form>
 			<input Type="BUTTON" VALUE="Developers" ONCLICK="window.location.href='/developers'">

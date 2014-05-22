@@ -15,6 +15,9 @@
 					border:1px dashed #333;
 					background-color:#eee;
 					}
+				#Content1 {
+					text-align:center;
+					}
 			</style>
 		</head>
 	<body>
@@ -56,6 +59,14 @@
 				{% else %}
 				<p>Doesn't exist companies.</p>
 				{% endif %}
+
+			{% if owner %}
+			<br>
+			<form id="Content1">
+			<input Type="BUTTON" VALUE="Edit platform" ONCLICK="window.location.href='/platforms/{{ platform.name }}/edit'">
+			<input Type="BUTTON" VALUE="Delete platform" ONCLICK="window.location.href='/platforms/{{ platform.name }}/delete'">
+			</form>
+			{% endif %}
 		</div>
 		
 		<br><br>

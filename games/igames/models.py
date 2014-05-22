@@ -6,17 +6,22 @@ from django.contrib.auth.models import User
 class Company(models.Model):
 	name = models.TextField(max_length = 20)
 	fundation_date = models.DateTimeField()
+	city = models.TextField(max_length = 20)
 	stateOrProvince = models.TextField(max_length = 20)
 	country = models.TextField(max_length = 20)
 
 	def __unicode__(self):
 		return self.name
+	def get_absolute_url(self):
+		return reverse('company-detail', kwargs={'name': self.name})
 	
 class Platform(models.Model):
 	name = models.TextField(max_length = 20)
 
 	def __unicode__(self):
 		return self.name
+	def get_absolute_url(self):
+		return reverse('platform-detail', kwargs={'name': self.name})
 
 class Game(models.Model):
 	name = models.TextField(max_length = 20)
@@ -31,5 +36,7 @@ class Game(models.Model):
 	
 	def __unicode__(self):
 		return "Name: "+self.name
+	def get_absolute_url(self):
+		return reverse('game-detail', kwargs={'name': self.name})
 
 	

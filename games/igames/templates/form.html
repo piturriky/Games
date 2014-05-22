@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+
+		<style type="text/css">
+		body {
+			margin:50px 0px; padding:0px;
+			text-align:center;
+			}
+	
+		#Content {
+			width:1000px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#eee;
+			}
+		</style>
+	
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		{% load staticfiles %}
+		<script>
+			$(function() {
+			    $.getJSON("{% static "genres.json" %}", {}, function (countries) {
+				$("#id_genre").autocomplete({
+				    source: countries
+				});
+			    });
+
+			    $("#id_city").autocomplete({
+				source: function( request, response ) {
+				    $.ajax({
+					url: "http://api.geonames.org/searchJSON",
+					dataType: "jsonp",
+					data: {
+					    featureClass: "P",
+					    maxRows: 10,
+					    name_startsWith: request.term,
+					    username: "furg"
+					},
+					success: function( data ) {
+					    response( $.map( data.geonames, function( item ) {
+					        return {
+					            label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+					            value: item.name,
+					            stateOrProvince: item.adminName1,
+					            countryName: item.countryName
+					        }
+					    }));
+					}
+				    });
+				},
+				minLength: 2,
+				select: function( event, ui ) {
+				    if (ui.item) {
+					$("#id_stateOrProvince").val(ui.item.stateOrProvince);
+					$("#id_country").val(ui.item.countryName);
+					
+				    }
+				}
+			    });
+			});
+	   	 </script>
+
+	</head>
+	<body>
+		  <h1>{{ title }}</h1>
+	
+		  <br><br>
+		  <div id="Content">
+			  <form action="" method="post">
+			      {% csrf_token %}
+			      <table>
+			     	 {{ form.as_table }}
+			      </table>
+			      <br><br>
+			      <input type="submit" value="{{ title }}">
+			      <input type="BUTTON" value="Cancel" action ="action" ONCLICK="history.go(-1);">
+			      
+			  </form>
+		  </div>
+		
+		<br><br>
+		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
+		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
+	</body>
+</html>

@@ -21,14 +21,20 @@
 		</style>
 		</head>
 	<body>
-		<h1>Game: {{ game.name }}</h1>
+		<span vocab="http://schema.org/" typeof="SotwareApplication">
 
+		<h1>Game:
+			<span property="name">{{ game.name }}</span>
+		</h1>
+		
 		<div id="Content">
 			<p>Release date: {{ game.release_date }}</p>
 			<p>Price: {{ game.price }} €</p>
-			<p>Made in: {{ game.made_in }}</p>
-			<p>Description: {{ game.description }}</p>
-			<p>Company: <A HREF="/companies/{{game.company}}">{{game.company}}</A></p>
+			<p>Genre: <span property="applicationSubCategory"> {{ game.genre }}</span></p>
+			<p>Description: <span property="description">{{ game.description }}</span></p>
+			<span property="author" typeof="Organization">
+			<p>Company: <span property="legalName"> <A HREF="/companies/{{game.company}}"> {{game.company}}</A></span></p>
+			</span>
 			<p>Developers: </p>
 				{% if game.developers %}
 				<ul>
@@ -44,7 +50,7 @@
 				<ul>
 				{% for platform in game.platforms.all %}
 				<li>
-				<A HREF="/platforms/{{platform.name}}">{{platform.name}}</A>
+				<span property="device"><A HREF="/platforms/{{platform.name}}">{{platform.name}}</A></span>
 				</li>
 				{% endfor %}
 				</ul>
@@ -57,6 +63,7 @@
 			<input Type="BUTTON" VALUE="Delete game" ONCLICK="window.location.href='/games/{{ game.name }}/delete'">
 			</form>
 			{% endif %}
+		
 		</div>
 
 		<br><br>
@@ -64,6 +71,6 @@
 		<input Type="BUTTON" VALUE="Home" ONCLICK="window.location.href='/'">
 		<input Type="BUTTON" VALUE="Log out" ONCLICK="window.location.href='/logout'">
 		</form>
-
+	</span>
 	</body>
 </html>

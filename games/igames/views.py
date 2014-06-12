@@ -21,6 +21,9 @@ from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
 from rest_framework import generics, permissions
 from serializers import *
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.shortcuts import get_object_or_404
 
 def mainpage(request):
 	template = get_template('mainpage.html')
@@ -114,9 +117,10 @@ def gamepage(request, gamename,fm):
 		variables = Context({
 			'game': game,
 			'owner': owner,
+			'RATING_CHOICES' : GameReview.RATING_CHOICES,
 			})
 		output = template.render(variables)
-		return HttpResponse(output)
+		return render_to_response('gamepage.html', variables, context_instance = RequestContext(request));
 	elif fm == ".xml":
 		data = serializers.serialize("xml",Game.objects.filter(name=gamename))
 		return HttpResponse(data, mimetype="application/xml")
@@ -477,6 +481,19 @@ class PlatformDelete(CheckIsAdminMixin,DeleteView):
 		context = super(PlatformDelete, self).get_context_data(**kwargs)
 		context['title'] = 'Delete Platform'
 		return context
+
+@login_required()
+def review(request, name):
+    game = get_object_or_404(Game, name=name)
+    new_review = GameReview(
+        rating=request.POST['rating'],
+        comment=request.POST['comment'],
+        user=request.user,
+        game=game)
+    new_review.save()
+    #return HttpResponseRedirect(urlresolvers.reverse('game-detail', args=(game.name)))
+    return HttpResponseRedirect("/games/"+game.name)
+
 
 
 ### RESTful API views ###

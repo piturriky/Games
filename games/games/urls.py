@@ -50,13 +50,17 @@ urlpatterns = patterns('',
     url(r'^platforms/(?P<slug>\w+)/delete/$', PlatformDelete.as_view(
 				slug_field ='name',
 				success_url="/")),
+
+    url(r'^games/(\w+)/reviews/create/$',
+        review,
+        name='review_create'),
     ###############################################################
 
     url(r'^developers/(\w+)(.*)/$', userpage),
     url(r'^developers(.*)/$', userspage),
 
     url(r'^games/(\w+)(.*)/$', gamepage),
-    url(r'^games(.*)/$', gamespage),
+    url(r'^games(.*)/$', gamespage,name = 'game_detail'),
 
     url(r'^companies/(\w+)(.*)/$', companypage),
     url(r'^companies(.*)/$', companiespage),

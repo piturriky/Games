@@ -1,5 +1,6 @@
 <html>
 		<head>
+		{% load staticfiles %}
 		<title>{{ game.name }}</title>
 		<style type="text/css">
 		body {
@@ -18,13 +19,53 @@
 		#Content1 {
 			text-align:center;
 			}
+		#ContentReview {
+			width:350px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#f2c66e;
+			}
+		#ContentComment {
+			width:320px;
+			margin:0px auto;
+			text-align:left;
+			padding:15px;
+			border:1px dashed #333;
+			background-color:#efe3cc;
+			}
+
+		span.stars, span.stars span {
+		    display: block;
+		    background: url("{% static "stars.png" %}") 0 -16px repeat-x;
+		    width: 80px;
+		    height: 16px;
+
+		}
+
+		span.stars span {
+		    background-position: 0 0;
+		}
 		</style>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+		<script type="text/javascript">
+	   		$.fn.stars = function() {
+			    return $(this).each(function() {
+				$(this).html($('<span />').width(Math.max(0, (Math.min(5, parseFloat($(this).html())))) * 16));
+			    });
+			}
+
+		$(function() {
+		    $('span.stars').stars();
+		});
+		</script>
 		</head>
 	<body>
-		<span vocab="http://schema.org/" typeof="SotwareApplication">
+		<span vocab="http://schema.org/" typeof="CreativeWork">
 
 		<h1>Game:
-			<span property="name">{{ game.name }}</span>
+			<span property="name">{{ game.name }}</span> 
 		</h1>
 		
 		<div id="Content">
@@ -50,11 +91,12 @@
 				<ul>
 				{% for platform in game.platforms.all %}
 				<li>
-				<A HREF="/platforms/{{platform.name}}"><span property="device">{{platform.name}}</span></A>
+				<span property="device"><A HREF="/platforms/{{platform.name}}">{{platform.name}}</A></span>
 				</li>
 				{% endfor %}
 				</ul>
 				{% endif %}
+
 
 			{% if owner %}
 			<br>
@@ -65,6 +107,57 @@
 			{% endif %}
 		
 		</div>
+		<br><br>
+		<h2>Reviews</h2>
+		<div id="ContentReview">
+			{% if game.gamereview_set.all|length > 0 %}
+			<span rel="aggregateRating">
+			    <div typeof="AggregateRating">
+				<p>Average rating:</p>
+				<p><span class="stars">{{ game.averageRating|stringformat:".1f" }}</span></p>
+				<span property="ratingValue" content={{ game.averageRating|stringformat:".1f" }}></span>
+				{% with game.gamereview_set.all|length as reviewCount %}
+				<p>From <span property="reviewCount">{{ reviewCount }}</span> review{{ reviewCount|pluralize }}:</p>
+				{% endwith %}
+			    </div>
+			</span>
+
+			<div rel="review">
+			    {% for review in game.gamereview_set.all %}
+				<div typeof="Review" id="ContentComment">
+				  <p>User: <span property="author">{{ review.user }}</span> 
+					&nbsp;&nbsp;On <span property="publishDate">{{ review.date}}</span></p>
+				    <span class="stars">{{ review.rating }}</span>
+				    <p rel="reviewRating" typeof="Rating">
+					<span property="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
+					<span property="ratingValue"content= "{{ review.rating }}"></span>
+					{% with RATING_CHOICES|last as best %}
+					<span property="bestRating" content="{{ best.0 }}"></span>
+					{% endwith %}
+				    </p>
+				    <p property="description">{{ review.comment }}</p>
+				    
+				</div>
+				<br>
+			    {% endfor %}
+			</div>
+			
+			{% endif %}
+			<h3>Add Review</h3>
+			<form action="{% url 'review_create' game.name %}" method="post">
+			    {% csrf_token %}
+			    <p>Message: </p><textarea name="comment" id="comment" rows="4"></textarea>
+			    <p>Rating:</p>
+			    <p>
+			    {% for rate in RATING_CHOICES %}
+				<input type="radio" name="rating" id="rating{{ forloop.counter }}" value="{{ rate.1 }}" />
+				<label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{ rate.0|pluralize }}</label><br />
+			    {% endfor %}
+			    </p>
+			    <input type="submit" value="Review" />
+			</form>
+		</div>
+
 
 		<br><br>
 		<form>
